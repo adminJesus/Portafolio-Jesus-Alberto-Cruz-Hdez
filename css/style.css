@@ -129,6 +129,28 @@ body {
     color: #ffffff;
 }
 
+/* BOTÓN HAMBURGUESA (MÓVIL) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 101;
+    padding: 0;
+}
+
+.menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    transition: var(--transition-smooth);
+}
+
 /* BOTONES */
 .btn {
     display: inline-flex;
@@ -532,7 +554,7 @@ body {
     transform: translateY(0);
 }
 
-/* 11. RESPONSIVE DESIGN */
+/* 11. RESPONSIVE DESIGN & NUEVO MENÚ HAMBURGUESA */
 @media (max-width: 880px) {
     .row-3-col {
         grid-template-columns: 1fr;
@@ -544,19 +566,75 @@ body {
         font-size: 0.85rem;
         color: var(--accent-hover);
     }
+}
 
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Transformar el menú en un panel flotante alineado a la derecha */
     .nav-menu {
-        gap: 1.2rem;
+        position: absolute;
+        top: 100%;
+        right: 1.5rem;
+        /* Alineado al margen derecho */
+        left: auto;
+        width: 240px;
+        /* Ancho compacto y fijo en lugar del 100% */
+        background-color: var(--bg-surface);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 1rem;
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition-smooth);
+        z-index: 99;
+    }
+
+    .nav-menu .nav-link {
+        display: block;
+        padding: 0.7rem 0.5rem;
+        border-bottom: 1px solid var(--border-subtle);
+        font-size: 0.95rem;
+        text-align: left;
+    }
+
+    .nav-menu .btn-outline {
+        margin-top: 0.75rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Estado activo del menú desplegable */
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Animación del botón hamburguesa a "X" */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
     }
 }
 
 @media (max-width: 640px) {
     .section {
         padding: 4.5rem 0;
-    }
-
-    .nav-menu .nav-link {
-        display: none;
     }
 
     .hero-title {
@@ -745,4 +823,98 @@ body {
 .carousel-container:hover .carousel-btn {
     opacity: 1;
     visibility: visible;
+}
+
+
+/* Estilos para el modal de alert de proyectos sin url */
+
+.project-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 14, 18, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-smooth);
+    z-index: 1000;
+}
+
+.project-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.project-modal-content {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    max-width: 460px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+    transform: translateY(16px) scale(0.98);
+    transition: var(--transition-smooth);
+}
+
+.project-modal-overlay.active .project-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.project-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.project-modal-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-hover);
+    background: var(--accent-glow);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 0.25rem 0.7rem;
+    border-radius: 9999px;
+}
+
+.project-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.project-modal-close:hover {
+    color: #ffffff;
+}
+
+.project-modal-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+}
+
+.project-modal-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 1.75rem;
+}
+
+.project-modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
 }

@@ -1,3 +1,68 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("privateProjectModal");
+  const modalTitle = document.getElementById("modalProjectTitle");
+  const modalMessage = document.getElementById("modalProjectMessage");
+  const closeBtn = document.getElementById("closeProjectModal");
+  const acceptBtn = document.getElementById("modalAcceptBtn");
+  const contactBtn = document.getElementById("modalContactBtn");
+
+  const defaultMessage = "Este sistema forma parte de una plataforma privada o en entorno local. Por políticas de seguridad, privacidad de datos y confidencialidad, la URL pública no está disponible.";
+
+  function openPrivateModal(title, customMessage) {
+    modalTitle.textContent = title || "Proyecto Privado";
+    modalMessage.textContent = customMessage || defaultMessage;
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closePrivateModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  // Interceptar clics en cualquier enlace de proyecto que tenga href="#"
+  document.addEventListener("click", (e) => {
+    const projectLink = e.target.closest(".project-card a, .project-link");
+    if (!projectLink) return;
+
+    const href = projectLink.getAttribute("href");
+    if (!href || href === "#") {
+      e.preventDefault(); // Evita que la página salte hacia arriba (#)
+
+      // Obtener el título desde la tarjeta del proyecto
+      const card = projectLink.closest(".project-card");
+      const title = card ? card.querySelector(".project-title")?.textContent : "Proyecto Privado";
+
+      // Si guardaste un mensaje personalizado en data-message del enlace, lo usa
+      const customMsg = projectLink.dataset.message || "";
+
+      openPrivateModal(title, customMsg);
+    }
+  });
+
+  // Eventos para cerrar el modal
+  if (closeBtn) closeBtn.addEventListener("click", closePrivateModal);
+  if (acceptBtn) acceptBtn.addEventListener("click", closePrivateModal);
+  if (contactBtn) contactBtn.addEventListener("click", closePrivateModal);
+
+  // Cerrar al hacer clic fuera de la caja del modal
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closePrivateModal();
+      }
+    });
+  }
+
+  // Cerrar con la tecla Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closePrivateModal();
+    }
+  });
+});
+
+
 (function () {
   const container = document.getElementById("threejs-container-ANIMATION_3");
   const devicePixelRatio = window.devicePixelRatio || 1;
@@ -34,7 +99,7 @@
       category: "Full Stack & Web Application",
       role: "Full Stack Developer",
       description:
-        "Desarrolle una web de gestión de ventas que toma pedidos. Permite a los colaboradores tomar pedidos con mas eficacia y mejor atención al cliente, como tambien registra las ventas generadas por colaborador por día, semana y mes, se implemento envio digital de lo consumido por el cliente por vía correo electrónico, y como medida de seguridad se implemento una expiración de un tiempo de 8 hrs y la implementación de autenticación basada en tokens y validación de sesión única por usuario.",
+        "Desarrollo de plataforma web Full Stack para gestión de pedidos y control de ventas. Optimiza la eficiencia operativa en campo y el registro analítico por colaborador (diario, semanal y mensual). Integra un módulo de envío automatizado de comprobantes digitales vía correo electrónico y mecanismos avanzados de seguridad: control de sesión única, autenticación basada en tokens y expiración automática de sesión a las 8 horas.",
       technologies: [
         "Laravel 12",
         "PHP",
@@ -61,19 +126,20 @@
       category: "Full Stack & Web Platform",
       role: "Frontend (Enoc Labs)",
       description:
-        "En mi tiempo en Enoc Labs mi rol fue desarrollar el frontend del sitio web de la cafetería del Hospital San José, creando una plataforma moderna y funcional solicitado. El sitio facilita el acceso al menú diario que ofrece el Hospital San José, como platillos, eventos privados, ubicación y datos de contacto, ofreciendo una experiencia intuitiva para colaboradores, pacientes y visitantes. Además, permite una administración eficiente del contenido para mantener la información siempre actualizada.",
+        "Desarrollo Frontend para la plataforma web institucional del Hospital San José. Implementación de una interfaz moderna e intuitiva para la consulta optimizada del menú diario, servicios, eventos privados y canales de contacto, orientada a colaboradores, pacientes y visitantes. Integración de un módulo de administración de contenidos para la actualización dinámica y eficiente de la información.",
       technologies: ["HTML5", "JavaScript", "CSS3"],
       link: "https://www.cafeteria.hospitalessanjose.com/",
       image: "img/cafeteria.png",
     },
     {
-      title: "Hospital San José — Sistema de Encuestas",
+      title: "Hospital San José – Sistema de Encuestas",
       category: "Web Platform & Management",
       role: "Frontend & API Integration (Enoc Labs)",
       description:
-        "En mi tiempo en Enoclabs mi rol fue el desarrollo del Frontend y el consumo de APIs para la plataforma de encuestas para el Hospital San José. Se diseño y contruyo una interfaz fluida e intuitiva enfocada en la experiencia de usuario (UX) para dispositivos apple, conectando las vistas visuales con los endpoints del servidor y la plataforma de administración, para la captura y envío en tiempo real de información de pacientes en áreas como Urgencias e Hospitalización entre otros. Esta integración garantiza un flujo de datos optimizanda y la mejora de las áreas y atención a los pacientes.",
+        "Desarrollo Frontend y consumo de APIs REST para la plataforma de encuestas del Hospital San José. Construcción de interfaces responsivas y fluidas con enfoque UX, optimizadas para dispositivos Apple. Integración de vistas con endpoints del servidor para la captura y sincronización en tiempo real de datos de pacientes en áreas críticas como Urgencias e Hospitalización, garantizando flujos de datos optimizados y mejorando la calidad de la atención médica.",
       technologies: ["JavaScript", "Html", "Css"],
       link: "#",
+      privateMessage: "Plataforma interna de evaluación hospitalaria protegida por confidencialidad (NDA). Puedo compartir detalles técnicos de su arquitectura durante una entrevista.",
       image: "img/Survey-HSJ.png",
     },
     {
@@ -81,19 +147,19 @@
       category: "Web Platform & Management",
       role: "Frontend Developer (Enoc Labs)",
       description:
-        "En mi tiempo en Enoclabs, mi rol fue el desarrollo del Frontend y el consumo de APIs, para una plataforma de administración municipal. Diseñé e implementé vistas modernas y claras que permitan a los administradores gestionar la información de los participantes y el manejo de puntos recolectados por estos mismos y poder canjearlo por un premio, el porposito de la plataforma es insitar a las partisipantes recolectar residuos reciclables y sean premiados por su aportamiento auna buena causa.",
+        "Desarrollo Frontend y consumo de APIs REST para una plataforma de gestión municipal orientada a incentivos de reciclaje. Implementación de vistas administrativas dinámicas para el control de participantes, registro de acumulación de puntos y gestión automatizada de canjes por recompensas, optimizando la trazabilidad de datos y la operación ciudadana.",
       technologies: ["Laravel 12", "PHP", "JavaScript", "CSS3", "Blade"],
       link: "https://admin.smktmexico.com/8u5zih5toxzdgbfo",
       image: "img/smkt.png",
     },
-        {
+    {
       title: "HSJ-Adminitración — Sistema de Gestión Hospitalaria y Personal",
       category: "Web Platform & Management",
       role: "Frontend Developer (Enoc Labs)",
       description:
-        "Actualización y expansión de plataforma, Participé en la modernización y desarrollo de la plataforma institucional de gestión para el Hospital San José (enfocada en optimizar la administración de medicos, pacientes, restaurante y áreas médicas). Fui responsable del desarrollo Frontend y colaboré en la actualización de la lógica del sistema, implementando nuevas interfaces de usuario para funciones solicitadas por el hospital. Asimismo, contribuí en la integración de flujos de seguridad críticos, incluyendo códigos de verificación y validación de correos corporativos, elevando la robustez y optimización general de la plataforma.",
+        "Modernización y escalamiento de la plataforma institucional de gestión integral para el Hospital San José (administración de médicos, pacientes, servicios de comedor y áreas clínicas). Desarrollo Frontend e integración de nueva lógica de negocio mediante interfaces modulares, incorporando flujos críticos de seguridad como verificación en dos pasos mediante códigos OTP y validación de correos corporativos.",
       technologies: ["HTML", "PHP", "PHPMailer", "Composer", "MySQL", "JavaScript", "CSS3",],
-      link: "https://admin.smktmexico.com/8u5zih5toxzdgbfo",
+      link: "https://www.admin.hospitalessanjose.com/",
       image: "img/HSJ-Admin.png",
     },
   ];
@@ -319,6 +385,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initCarousel();
 });
 // Esta parte de este codigo, se encarga de mostrar en la Linea 170 las tegnologias con las que se trabajo en cada proyecto
-      // <div class="project-techs">
-      //   ${project.technologies.map((t) => `<span class="project-tech-tag">${escapeHTML(t)}</span>`).join("")}
-      // </div></br></br>
+// <div class="project-techs">
+//   ${project.technologies.map((t) => `<span class="project-tech-tag">${escapeHTML(t)}</span>`).join("")}
+// </div></br></br>

@@ -22,7 +22,15 @@
     <header class="site-header">
         <div class="container nav-container">
             <a href="#Yo" class="brand-logo">JACH<span>.</span></a>
-            <nav class="nav-menu">
+
+            <!-- Botón Hamburguesa para dispositivos móviles -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="nav-menu" id="navMenu">
                 <a href="#sobre-mi" class="nav-link">Sobre Mí</a>
                 <a href="#experiencia" class="nav-link">Trayectoria</a>
                 <a href="#educacion" class="nav-link">Educación</a>
@@ -61,10 +69,10 @@
             <div class="container">
                 <div class="badge">Disponible para nuevos proyectos</div>
                 <h1 class="hero-title">Jesus Alberto<br><span class="text-highlight">Cruz Hernandez</span></h1>
-                <p class="hero-role">Full Stack Software Developer</p>
+                <p class="hero-role">Desarrollador Full Stack</p>
                 <p class="hero-summary">
-                    Desarrollador de software desde 2024, especializado en el diseño e implementación de soluciones
-                    tecnológicas integrales (Frontend & Backend).
+                    Especializado desde 2024 en arquitectura, desarrollo e integración de aplicaciones web escalables
+                    (Frontend y Backend), optimizando flujos de datos, seguridad e interfaces de usuario.
                 </p>
                 <div class="hero-actions">
                     <a href="#proyectos" class="btn btn-primary">Ver Proyectos Destacados</a>
@@ -157,7 +165,7 @@
                             <span class="period">2024 — Actual</span>
                         </div>
                         <div class="col-title">
-                            <h3 class="role-title">Jesus — Full Stack Developer</h3>
+                            <h3 class="role-title">Jesus — Desarrollador Full Stack</h3>
                             <span class="company-name">Enoc Labs agency</span>
                         </div>
                         <div class="col-desc">
@@ -275,15 +283,15 @@
                         stack.
                     </p>
                     <div class="contact-links">
-                        <a href="https://www.linkedin.com/" class="contact-cta" target="_blank"
-                            rel="noopener noreferrer">LinkedIn &rarr;</a>
+                        <a href="https://www.linkedin.com/public-profile/settings/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact_info%3BXn3Lyj5QTA%2BstdbMsyiHfg%3D%3D"
+                            class="contact-cta" target="_blank" rel="noopener noreferrer">LinkedIn &rarr;</a>
                     </div>
                     <div class="contact-links">
                         <a href="https://github.com/jesuscruz" class="contact-cta" target="_blank"
                             rel="noopener noreferrer">GitHub &rarr;</a>
                     </div>
                     <div class="contact-links">
-                        <a href="mailto:cruzjesusalberto312@gmail.com" target="_blank" class="contact-cta">Correo
+                        <a href="mailto:cruzjesusalberthdz007@gmail.com" target="_blank" class="contact-cta">Correo
                             Electrónico &rarr;</a>
                     </div>
 
@@ -305,7 +313,28 @@
         </div>
     </footer>
 
+    <!-- Modal de alerta para los proyectos sin url-->
+    <div id="privateProjectModal" class="project-modal-overlay" aria-hidden="true">
+        <div class="project-modal-content" role="dialog" aria-labelledby="modalProjectTitle">
+            <div class="project-modal-header">
+                <span class="project-modal-badge">Acceso Restringido</span>
+                <button id="closeProjectModal" class="project-modal-close" aria-label="Cerrar aviso">×</button>
+            </div>
+            <h3 id="modalProjectTitle" class="project-modal-title">Título del Proyecto</h3>
+            <p id="modalProjectMessage" class="project-modal-desc">
+                Este sistema forma parte de una plataforma institucional privada. Por políticas de seguridad, privacidad
+                de datos y acuerdos de confidencialidad (NDA), el acceso público no está habilitado.
+            </p>
+            <div class="project-modal-actions">
+                <a href="#contacto" id="modalContactBtn" class="btn btn-primary">Solicitar demostración</a>
+                <button id="modalAcceptBtn" class="btn btn-secondary">Entendido</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
+    <script src="/js/Tailwind.js"></script>
+
 </body>
 
 </html>
